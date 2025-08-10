@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 * Change tag key from `map_env` to `env` by removing space
 * Remove blank lines when rendering http_check.yaml file
+* Lock helm version < 3 to prevent error
 
 ## [0.7.0]() (2025-06-14)
 
