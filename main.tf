@@ -25,12 +25,11 @@ clusterAgent:
     http_check.yaml: |-
       cluster_check: ${var.enabled_cluster_check}
       init_config:
-      instances:
-%{for url in var.http_check_urls}
+      instances: %{for url in var.http_check_urls}
         - name: ${url}
           url: ${url}
           tags:
-            - env: ${var.environment}
+            - env:${var.environment}
 %{endfor}
 YAML
 }
