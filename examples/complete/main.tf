@@ -1,5 +1,5 @@
 module "datadog" {
-  source  = "../.."
+  source = "../.."
 
   environment  = "dev"
   cluster_name = "your-cluster-name"

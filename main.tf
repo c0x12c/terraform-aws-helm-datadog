@@ -48,108 +48,94 @@ resource "helm_release" "this" {
   create_namespace = true
   timeout          = var.timeout
 
-  set_sensitive {
-    name  = "datadog.apiKey"
-    value = var.datadog_api_key
-  }
-  set_sensitive {
-    name  = "datadog.appKey"
-    value = var.datadog_app_key
-  }
-  set_sensitive {
-    name  = "datadog.site"
-    value = var.datadog_site
-  }
-  set_sensitive {
-    name  = "datadog.clusterName"
-    value = var.cluster_name
-  }
-  set_sensitive {
-    name  = "clusterAgent.token"
-    value = random_password.cluster_agent_token.result
-  }
-
-  dynamic "set" {
-    for_each = var.node_selector
-    content {
-      name  = "agents.nodeSelector.${set.key}"
-      value = set.value
+  set_sensitive = [
+    {
+      name  = "datadog.apiKey"
+      value = var.datadog_api_key
+    },
+    {
+      name  = "datadog.appKey"
+      value = var.datadog_app_key
+    },
+    {
+      name  = "datadog.site"
+      value = var.datadog_site
+    },
+    {
+      name  = "datadog.clusterName"
+      value = var.cluster_name
+    },
+    {
+      name  = "clusterAgent.token"
+      value = random_password.cluster_agent_token.result
     }
-  }
+  ]
 
-  dynamic "set" {
-    for_each = var.node_selector
-    content {
-      name  = "clusterAgent.nodeSelector.${set.key}"
-      value = set.value
-    }
-  }
-
-  dynamic "set" {
-    for_each = var.tolerations
-    content {
-      name  = "agents.tolerations[${set.key}].key"
-      value = lookup(set.value, "key", "")
-    }
-  }
-
-  dynamic "set" {
-    for_each = var.tolerations
-    content {
-      name  = "agents.tolerations[${set.key}].operator"
-      value = lookup(set.value, "operator", "")
-    }
-  }
-
-  dynamic "set" {
-    for_each = var.tolerations
-    content {
-      name  = "agents.tolerations[${set.key}].value"
-      value = lookup(set.value, "value", "")
-    }
-  }
-
-  dynamic "set" {
-    for_each = var.tolerations
-    content {
-      name  = "agents.tolerations[${set.key}].effect"
-      value = lookup(set.value, "effect", "")
-    }
-  }
-
-  dynamic "set" {
-    for_each = var.tolerations
-    content {
-      name  = "clusterAgent.tolerations[${set.key}].key"
-      value = lookup(set.value, "key", "")
-    }
-  }
-
-  dynamic "set" {
-    for_each = var.tolerations
-    content {
-      name  = "clusterAgent.tolerations[${set.key}].operator"
-      value = lookup(set.value, "operator", "")
-    }
-  }
-
-  dynamic "set" {
-    for_each = var.tolerations
-    content {
-      name  = "clusterAgent.tolerations[${set.key}].value"
-      value = lookup(set.value, "value", "")
-    }
-  }
-
-  dynamic "set" {
-    for_each = var.tolerations
-    content {
-      name  = "clusterAgent.tolerations[${set.key}].effect"
-      value = lookup(set.value, "effect", "")
-    }
-  }
+  set = flatten([
+    [
+      for key, value in var.node_selector : {
+        name  = "agents.nodeSelector.${key}"
+        value = value
+      }
+    ],
+    [
+      for key, value in var.node_selector : {
+        name  = "clusterAgent.nodeSelector.${key}"
+        value = value
+      }
+    ],
+    [
+      for key, value in var.tolerations : {
+        name  = "agents.tolerations[${key}].key"
+        value = lookup(value, "key", "")
+      }
+    ],
+    [
+      for key, value in var.tolerations : {
+        name  = "agents.tolerations[${key}].operator"
+        value = lookup(value, "operator", "")
+      }
+    ],
+    [
+      for key, value in var.tolerations : {
+        name  = "agents.tolerations[${key}].value"
+        value = lookup(value, "value", "")
+      }
+    ],
+    [
+      for key, value in var.tolerations : {
+        name  = "agents.tolerations[${key}].effect"
+        value = lookup(value, "effect", "")
+      }
+    ],
+    [
+      for key, value in var.tolerations : {
+        name  = "clusterAgent.tolerations[${key}].key"
+        value = lookup(value, "key", "")
+      }
+    ],
+    [
+      for key, value in var.tolerations : {
+        name  = "clusterAgent.tolerations[${key}].operator"
+        value = lookup(value, "operator", "")
+      }
+    ],
+    [
+      for key, value in var.tolerations : {
+        name  = "clusterAgent.tolerations[${key}].value"
+        value = lookup(value, "value", "")
+      }
+    ],
+    [
+      for key, value in var.tolerations : {
+        name  = "clusterAgent.tolerations[${key}].effect"
+        value = lookup(value, "effect", "")
+      }
+    ],
+  ])
 
   values = [local.manifest]
+
   lifecycle {
     ignore_changes = [
       timeout
