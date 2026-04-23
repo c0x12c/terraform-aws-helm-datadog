@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.9.1]() (2026-04-23)
+
+* Add `name_override` and `fullname_override` to override default one, which cause conflicts while creating multi datadog agent cluster in the same EKS.
+
 ## [0.9.0]() (2025-10-06)
 
 ### ⚠ BREAKING CHANGES

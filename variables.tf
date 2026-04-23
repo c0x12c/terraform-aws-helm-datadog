@@ -120,3 +120,15 @@ variable "container_include" {
   description = "value"
   default     = null
 }
+
+variable "name_override" {
+  type        = string
+  description = "To override the name of the datadog chart"
+  default     = null
+}
+
+variable "fullname_override" {
+  type        = string
+  description = "To override the fullname of the datadog chart"
+  default     = null
+}
