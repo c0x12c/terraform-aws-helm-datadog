@@ -1,6 +1,12 @@
 locals {
   manifest = <<YAML
 datadog:
+  %{if var.name_override != null}
+  nameOverride: ${var.name_override}
+  %{endif}
+  %{if var.fullname_override != null}
+  fullnameOverride: ${var.fullname_override}
+  %{endif}
   logs:
     enabled: ${var.enabled_logs}
     containerCollectAll: ${var.enabled_container_collect_all_logs}
