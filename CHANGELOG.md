@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.10.0]() (2026-05-09)
+
+### Features
+
+* Add `extra_confd` input - inject arbitrary cluster-agent confd files (OpenMetrics, custom tcp_check, etc) without forking the module. Default is `{}` (no-op for existing callers).
+
 ## [0.9.0]() (2025-10-06)
 
 ### ⚠ BREAKING CHANGES
