@@ -58,6 +58,12 @@ variable "chart_version" {
   description = "The version of the datadog chart"
 }
 
+variable "enabled_apm_port" {
+  type        = bool
+  default     = true
+  description = "Expose APM trace port 8126 on the node via hostPort so apps can reach the DaemonSet agent using DD_AGENT_HOST=status.hostIP."
+}
+
 variable "datadog_envs" {
   description = "Environment variables for datadog agents"
   type = list(object({

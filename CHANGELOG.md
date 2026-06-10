@@ -1,6 +1,17 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
+
+## [0.11.0]() (2026-06-10)
+
+### Features
+
+* Enable APM hostPort (`datadog.apm.portEnabled`) by default so applications can send traces to the DaemonSet agent via `DD_AGENT_HOST=status.hostIP`.
+
+### Inputs
+
+* Add `enabled_apm_port` (default `true`).
+
 ## [0.10.0](https://github.com/c0x12c/terraform-modules-registry/compare/terraform-aws-helm-datadog/v0.9.0...terraform-aws-helm-datadog/v0.10.0) (2026-06-07)
 
 

@@ -7,6 +7,8 @@ nameOverride: ${var.name_override}
 fullnameOverride: ${var.fullname_override}
 %{endif}
 datadog:
+  apm:
+    portEnabled: ${var.enabled_apm_port}
   logs:
     enabled: ${var.enabled_logs}
     containerCollectAll: ${var.enabled_container_collect_all_logs}
